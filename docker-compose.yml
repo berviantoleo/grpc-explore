@@ -1,0 +1,17 @@
+services:
+  server:
+    build: ./GRPCExample
+    ports: 
+      - "8080:8080"
+  dotnetclient:
+    depends_on: 
+      - server
+    build: ./GRPC.Client
+    environment:
+      SERVER_URL: "http://server:8080"
+  goclient:
+    depends_on: 
+      - server
+    build: ./go_client
+    environment:
+      SERVER_URL: "server:8080"
